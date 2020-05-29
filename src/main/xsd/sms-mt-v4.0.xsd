@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" targetNamespace="http://sms.openmarket.com/v4/mt" xmlns:tns="http://sms.openmarket.com/v4/mt" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="mobileTerminate">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="options" type="tns:messageOptions" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="message" type="tns:message" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="destination" type="tns:messageDestination" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="source" type="tns:messageSource" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="delivery" type="tns:deliveryOptions" minOccurs="0" maxOccurs="1"/>
+            </xs:all>
+            <xs:attribute name="interaction" type="xs:string" use="optional"/>
+            <xs:attribute name="promotional" type="xs:boolean" use="optional"/>
+            <xs:attribute name="retryOfTicketId" type="xs:string" use="optional"/>
+            <xs:attribute name="campaign" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="messageOptions">
+        <xs:attribute name="note1" type="xs:string" use="optional"/>
+        <xs:attribute name="note2" type="xs:string" use="optional"/>
+        <xs:attribute name="programId" type="xs:string" use="optional"/>
+        <xs:attribute name="flash" type="xs:boolean" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="message">
+        <xs:choice>
+            <xs:element name="content" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        </xs:choice>
+        <xs:attribute name="type" type="xs:string" use="required"/>
+        <xs:attribute name="validityPeriod" type="xs:int" use="optional"/>
+        <xs:attribute name="mlc" type="xs:string" use="optional"/>
+        <xs:attribute name="lossless" type="xs:boolean" use="optional"/>
+        <xs:attribute name="charset" type="xs:string" use="optional"/>
+        <xs:attribute name="udh" type="xs:boolean" use="optional"/>
+        <xs:attribute name="url" type="xs:string" use="optional"/>
+   </xs:complexType>
+
+        <xs:complexType name="messageDestination">
+            <xs:attribute name="address" type="xs:string" use="required"/>
+            <xs:attribute name="mobileOperatorId" type="xs:int" use="optional"/>
+        </xs:complexType>
+
+        <xs:complexType name="messageSource">
+            <xs:attribute name="ton" type="xs:int" use="optional"/>
+            <xs:attribute name="address" type="xs:string" use="required"/>
+        </xs:complexType>
+
+        <xs:complexType name="deliveryOptions">
+            <xs:attribute name="receiptRequested" type="xs:string" use="optional"/>
+            <xs:attribute name="multiPartReceipts" type="xs:boolean" use="optional"/>
+            <xs:attribute name="url" type="xs:string" use="optional"/>
+        </xs:complexType>
+
+        <xs:element name="error">
+            <xs:complexType>
+                <xs:attribute name="code" type="xs:string" use="required"/>
+                <xs:attribute name="description" type="xs:string" use="optional"/>
+            </xs:complexType>
+        </xs:element>
+
+        <xs:complexType name="status">
+            <xs:attribute name="code" type="xs:string" use="required"/>
+            <xs:attribute name="description" type="xs:string" use="optional"/>
+        </xs:complexType>
+
+        <xs:element name="mtStatus" type="tns:mtStatus"/>
+
+        <xs:complexType name="mtStatus">
+            <xs:sequence>
+                <xs:element name="segments" type="tns:mtSegments" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="ticketId" type="xs:string" use="required"/>
+            <xs:attribute name="deliveryDate" type="xs:dateTime" use="optional"/>
+            <xs:attribute name="code" type="xs:string" use="required"/>
+            <xs:attribute name="description" type="xs:string" use="optional"/>
+            <xs:attribute name="note1" type="xs:string" use="optional"/>
+            <xs:attribute name="note2" type="xs:string" use="optional"/>
+            <xs:attribute name="mobileOperatorId" type="xs:int" use="optional"/>
+            <xs:attribute name="totalSegments" type="xs:int" use="optional"/>
+            <xs:attribute name="segmentNumber" type="xs:int" use="optional"/>
+        </xs:complexType>
+
+        <xs:complexType name="mtSegments">
+            <xs:sequence>
+                <xs:element name="segment" type="tns:mtSegment" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+
+        <xs:complexType name="mtSegment">
+            <xs:attribute name="segmentNumber" type="xs:int" use="required"/>
+            <xs:attribute name="deliveryDate" type="xs:dateTime" use="optional"/>
+	    <xs:attribute name="code" type="xs:string" use="required"/>
+	    <xs:attribute name="description" type="xs:string" use="optional"/>
+        </xs:complexType>
+
+        <!-- the deliveryReceipt must appear as a stand-alone element, and as a re-usable named type -->
+    <xs:element name="deliveryReceipt" type="tns:deliveryReceipt"/>
+
+    <xs:complexType name="deliveryReceipt">
+        <xs:sequence>
+            <xs:element ref="tns:mtStatus" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="type" type="xs:string" use="required"/>
+    </xs:complexType>
+
+</xs:schema>

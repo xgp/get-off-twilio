@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" targetNamespace="http://sms.openmarket.com/v4/mo" xmlns:tns="http://sms.openmarket.com/v4/mo" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="mobileOriginate">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="tns:message" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="destination" type="tns:messageDestination" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="source" type="tns:messageSource" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="ticketId" type="xs:string" use="required"/>
+            <xs:attribute name="submittedDate" type="xs:dateTime" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="message">
+        <xs:choice>
+            <xs:element name="content" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        </xs:choice>
+        <xs:attribute name="type" type="xs:string" use="required"/>
+        <xs:attribute name="udh" type="xs:boolean" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="messageDestination">
+        <xs:attribute name="ton" type="xs:int" use="optional"/>
+        <xs:attribute name="address" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="messageSource">
+    	<xs:attribute name="address" type="xs:string" use="required"/>
+    	<xs:attribute name="mobileOperatorId" type="xs:int" use="optional"/>
+    	<xs:attribute name="ton" type="xs:int" use="optional"/>
+    </xs:complexType>
+</xs:schema>
