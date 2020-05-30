@@ -1,9 +1,5 @@
 package com.github.xgp.hub.twilio.server;
 
-
-
-
-
 import javax.validation.constraints.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;

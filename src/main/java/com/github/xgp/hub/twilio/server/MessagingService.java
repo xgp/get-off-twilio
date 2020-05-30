@@ -42,7 +42,8 @@ public class MessagingService extends DefaultAccountsApiService {
     throw new NotImplementedException();
   }
 
-  //     "Returns a list of messages associated with your account. The list includes paging information.",
+  //     "Returns a list of messages associated with your account. The list includes paging
+  // information.",
   @Override
   public Response accountsAccountSidMessagesmediaTypeExtensionGet(
       String accountSid, String mediaTypeExtension, SecurityContext securityContext) {
@@ -50,7 +51,8 @@ public class MessagingService extends DefaultAccountsApiService {
     throw new NotImplementedException();
   }
 
-  //          "To send a new outgoing message, make an HTTP POST to your Messages list resource URI",
+  //          "To send a new outgoing message, make an HTTP POST to your Messages list resource
+  // URI",
   @Override
   public Response accountsAccountSidMessagesmediaTypeExtensionPost(
       String to,
@@ -75,5 +77,4 @@ public class MessagingService extends DefaultAccountsApiService {
     log.info("accountsAccountSidSMSShortCodesShortCodeSidmediaTypeExtensionGet");
     throw new NotImplementedException();
   }
-
 }

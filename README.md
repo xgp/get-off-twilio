@@ -17,7 +17,7 @@ Everything gets a Router, which can take an MO or MT.
 ## webhook url flow to keep it stateless
 
 - requestor adds status_callback url to request
-- convert the url to http://local.url/callbacks/<internal_id>/<source_provider>/<urlencode(base64(callback))>
+- convert the url to http://local.url/<provider>/dlr/<internal_id>/<source_provider>/<urlencode(base64(callback))>
 - when received, convert callback to source_provider format and 
 
 ## TwiML bullshit

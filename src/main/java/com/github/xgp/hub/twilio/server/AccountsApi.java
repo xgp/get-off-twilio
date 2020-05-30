@@ -61,11 +61,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import javax.validation.constraints.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-import javax.ws.rs.core.MediaType;
 
-@Path("/Accounts")
+@Path("/2010-04-01/Accounts")
 @javax.annotation.Generated(
     value = "io.swagger.codegen.v3.generators.java.JavaJerseyDIServerCodegen",
     date = "2020-05-22T20:53:26.418+02:00[Europe/Paris]")

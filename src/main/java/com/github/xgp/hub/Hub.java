@@ -3,12 +3,12 @@ package com.github.xgp.hub;
 import com.github.xgp.hub.twilio.server.*;
 import javax.inject.Singleton;
 import javax.ws.rs.ApplicationPath;
+import lombok.extern.slf4j.Slf4j;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@ApplicationPath("/2010-04-01")
+@ApplicationPath("")
 public class Hub extends ResourceConfig {
 
   public static class HubBinder extends AbstractBinder {
