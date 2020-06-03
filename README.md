@@ -10,6 +10,10 @@ Router gets a static config, which is a map of Providers to Credentials, and a m
 
 Everything gets a Router, which can take an MO or MT.
 
+Provider loads from SPI
+ - can be used to create a ClientApi
+ - can be used to get jaxrs Resources for mo and dlr
+
 ## How do you run it?
 
 `java -cp <classpath> com.github.xgp.Hub -c mappings.json -u https://example.com/your-callback-url`

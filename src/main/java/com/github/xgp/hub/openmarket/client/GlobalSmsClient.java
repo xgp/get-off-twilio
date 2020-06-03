@@ -9,6 +9,7 @@ import java.io.StringWriter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import lombok.NonNull;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
@@ -30,7 +31,7 @@ public class GlobalSmsClient {
 
   private final UsernamePasswordCredentials creds;
 
-  public GlobalSmsClient(String accountId, String password) {
+  public GlobalSmsClient(@NonNull String accountId, @NonNull String password) {
     this.creds = new UsernamePasswordCredentials(accountId, password);
   }
 

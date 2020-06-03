@@ -64,7 +64,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Path("/2010-04-01/Accounts")
 @javax.annotation.Generated(
     value = "io.swagger.codegen.v3.generators.java.JavaJerseyDIServerCodegen",
@@ -77,6 +79,7 @@ public class AccountsApi {
 
   @javax.inject.Inject
   public AccountsApi(AccountsApiService delegate) {
+    log.info("AccountsApi created");
     this.delegate = delegate;
   }
 

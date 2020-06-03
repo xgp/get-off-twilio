@@ -11,18 +11,17 @@
  */
 package com.github.xgp.hub.twilio.client;
 
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
-import com.fasterxml.jackson.databind.util.ISO8601Utils;
-import java.text.FieldPosition;
-import java.util.Date;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 
-public class RFC3339DateFormat extends ISO8601DateFormat {
+public class RFC3339DateFormat extends StdDateFormat {
 
   // Same as ISO8601DateFormat but serializing milliseconds.
+  /*
   @Override
   public StringBuffer format(Date date, StringBuffer toAppendTo, FieldPosition fieldPosition) {
-    String value = ISO8601Utils.format(date, true);
+    String value = StdDateFormat.DATE_FORMAT_ISO8601.format(date);
     toAppendTo.append(value);
     return toAppendTo;
   }
+  */
 }

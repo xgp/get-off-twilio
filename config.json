@@ -1,0 +1,22 @@
+{
+  "providers":
+  [
+    { "type": "openmarket",
+      "credentials": {
+        "username": "foo",
+        "password": "bar"
+      },
+      "default": true
+    }
+  ],
+  "mappings":
+  [
+    { "type": "openmarket",
+      "addresses": [
+        { "address": "+14155551212", "type":"INTERNATIONAL" },
+        { "address": "+16504440303", "type":"INTERNATIONAL" },
+        { "address": "446378", "type":"NETWORK" }
+      ]
+    }
+  ]
+}

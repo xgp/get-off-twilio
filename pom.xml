@@ -20,8 +20,10 @@
     <jersey-version>2.31</jersey-version>
     <jackson-version>2.10.1</jackson-version>
     <junit-version>4.12</junit-version>
-    <lombok-version>1.18.10</lombok-version>
+    <lombok-version>1.18.12</lombok-version>
+    <auto-service-version>1.0-rc7</auto-service-version>
     <servlet-api-version>3.1.0</servlet-api-version>
+    <slf4j-version>1.7.30</slf4j-version>
   </properties>
 
   <build>
@@ -34,10 +36,17 @@
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
-	  <compilerArgument>-Xlint:unchecked</compilerArgument>
-	  <compilerArgument>-Xlint:deprecation</compilerArgument>
+          <compilerArgs>
+            <arg>-Xlint:unchecked</arg>
+            <arg>-Xlint:deprecation</arg>
+          </compilerArgs>
           <useIncrementalCompilation>false</useIncrementalCompilation>
 	  <annotationProcessorPaths>
+            <path>
+	      <groupId>com.google.auto.service</groupId>
+	      <artifactId>auto-service</artifactId>
+	      <version>${auto-service-version}</version>
+            </path>
             <path>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
@@ -119,16 +128,42 @@
     </plugins>
   </build>
 
+  <!-- some f-ed up transitive deps that use [version,)) constraints -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>joda-time</groupId>
+        <artifactId>joda-time</artifactId>
+        <version>2.10.6</version>
+      </dependency>
+      <dependency>
+        <groupId>com.cloudhopper</groupId>
+        <artifactId>ch-commons-charset</artifactId>
+        <version>3.0.2</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
+    <dependency>
+      <groupId>com.cloudhopper</groupId>
+      <artifactId>ch-sxmp</artifactId>
+      <version>1.5.6</version>
+    </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.7.30</version>
+      <version>${slf4j-version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpasyncclient</artifactId>
-      <version>4.1.4</version>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.12</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -139,11 +174,19 @@
 
     <!-- annotation processing helpers for logging and services -->
     <dependency>
+      <groupId>com.google.auto.service</groupId>
+      <artifactId>auto-service</artifactId>
+      <version>${auto-service-version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>${lombok-version}</version>
       <scope>provided</scope>
     </dependency>
+
+    <!-- Swagger/OpenAPI annotations -->
     <dependency>
       <groupId>io.swagger.core.v3</groupId>
       <artifactId>swagger-annotations</artifactId>
