@@ -44,7 +44,7 @@ public class Bootstrap {
           "Loading provider {} with config {}",
           p.getType(),
           mapper.writeValueAsString(c)); // todo get rid of this to avoid un/pw in the logs
-      if (c != null && c.getDefault()) {
+      if (c.getDefault() != null && c.getDefault()) {
         log.info("Selected default provider as {}", c.getType());
         router.setDefaultProvider(c.getType());
       }
