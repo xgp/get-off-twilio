@@ -1,6 +1,6 @@
 package com.github.xgp.hub;
 
-import com.cloudhopper.sxmp.DeliveryReportRequest;
+import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import com.cloudhopper.sxmp.SubmitRequest;
 import com.cloudhopper.sxmp.SubmitResponse;
 

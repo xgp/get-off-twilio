@@ -1,6 +1,6 @@
 package com.github.xgp.hub.openmarket.client;
 
-import com.cloudhopper.sxmp.DeliveryReportRequest;
+import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import com.cloudhopper.sxmp.SubmitRequest;
 import com.cloudhopper.sxmp.SubmitResponse;
 import com.github.xgp.hub.ClientApi;

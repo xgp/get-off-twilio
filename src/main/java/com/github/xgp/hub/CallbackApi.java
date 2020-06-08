@@ -2,7 +2,7 @@ package com.github.xgp.hub;
 
 import com.cloudhopper.sxmp.DeliverRequest;
 import com.cloudhopper.sxmp.DeliverResponse;
-import com.cloudhopper.sxmp.DeliveryReportRequest;
+import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import com.cloudhopper.sxmp.DeliveryReportResponse;
 
 /**
@@ -12,6 +12,5 @@ import com.cloudhopper.sxmp.DeliveryReportResponse;
  */
 public interface CallbackApi {
   public DeliverResponse onMessage(DeliverRequest deliver);
-
   public DeliveryReportResponse onDeliveryReceipt(DeliveryReportRequest dlr);
 }

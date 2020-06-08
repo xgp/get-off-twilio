@@ -1,6 +1,6 @@
 package com.github.xgp.hub.openmarket.server;
 
-import com.cloudhopper.sxmp.DeliveryReportRequest;
+import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import com.github.xgp.hub.Router;
 import com.github.xgp.hub.config.ProviderConfig;
 import com.openmarket.sms.v4.mt.DeliveryReceipt;

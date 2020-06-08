@@ -2317,6 +2317,7 @@ public class AccountsApi {
           String messagingServiceSid,
       @Parameter(description = "", required = true) @FormParam("Body") String body,
       @Parameter(description = "", required = true) @FormParam("MediaUrl") String mediaUrl,
+      @Parameter(description = "", required = false) @FormParam("StatusCallback") String statusCallback,
       @Parameter(in = ParameterIn.PATH, description = "", required = true) @PathParam("AccountSid")
           String accountSid,
       @Parameter(
@@ -2335,6 +2336,7 @@ public class AccountsApi {
         messagingServiceSid,
         body,
         mediaUrl,
+        statusCallback,
         accountSid,
         mediaTypeExtension,
         securityContext);

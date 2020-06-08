@@ -354,6 +354,7 @@ public class AccountsApiServiceImpl implements AccountsApiService {
       String messagingServiceSid,
       String body,
       String mediaUrl,
+      String statusCallback,
       String accountSid,
       String mediaTypeExtension,
       SecurityContext securityContext) {

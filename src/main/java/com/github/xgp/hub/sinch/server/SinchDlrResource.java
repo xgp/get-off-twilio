@@ -1,6 +1,8 @@
 package com.github.xgp.hub.sinch.server;
 
-import com.cloudhopper.sxmp.DeliveryReportRequest;
+import com.github.xgp.hub.sxmp.DeliveryReportRequest;
+import com.cloudhopper.sxmp.DeliveryStatus;
+import com.clxcommunications.xms.api.BatchDeliveryReport;
 import com.github.xgp.hub.Router;
 import com.github.xgp.hub.config.ProviderConfig;
 import javax.validation.constraints.*;
@@ -10,8 +12,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import lombok.extern.slf4j.Slf4j;
-import com.clxcommunications.xms.api.BatchDeliveryReport;
-import com.cloudhopper.sxmp.DeliveryStatus;
 
 @Slf4j
 public class SinchDlrResource {
@@ -28,10 +28,14 @@ public class SinchDlrResource {
 
   @POST
   @Consumes({MediaType.APPLICATION_XML})
-  public Response receiveDeliveryReceipt(BatchDeliveryReport report, @Context SecurityContext securityContext) {
+  public Response receiveDeliveryReceipt(
+      BatchDeliveryReport report, @Context SecurityContext securityContext) {
     log.info("Sinch dlr");
     //  convert deliveryReceipt to dlr, validate
-    dlr.setStatus(new DeliveryStatus(report.statuses().get(0).code(), report.statuses().get(0).status().status())); //TODO convert to internal type
+    dlr.setStatus(
+        new DeliveryStatus(
+            report.statuses().get(0).code(),
+            report.statuses().get(0).status().status())); // TODO convert to internal type
     //  public DeliveryReportResponse onDeliveryReceipt(DeliveryReportRequest dlr) {
     this.router.onDeliveryReceipt(dlr);
     return Response.ok().build();

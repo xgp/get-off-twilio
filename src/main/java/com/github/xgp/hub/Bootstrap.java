@@ -28,8 +28,11 @@ public class Bootstrap {
     Config config = mapper.readValue(configFile, Config.class);
 
     // make a Router
-    this.router = new Router();
-
+    router = new Router();
+    router.setBaseUrl(config.getBaseUrl());
+    router.setCallbackUrl(config.getCallbackUrl());
+    router.setServerInterface(config.getServerInterface());
+    
     // make a map of the ProviderConfigs
     Map<String, ProviderConfig> providerConfigs =
         config.getProviders().stream()

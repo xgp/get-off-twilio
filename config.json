@@ -1,4 +1,7 @@
 {
+  "base_url": "https://foo.com",
+  "callback_url": "https://bar.com",
+  "server_interface": "sxmp",
   "providers":
   [
     { "type": "openmarket",

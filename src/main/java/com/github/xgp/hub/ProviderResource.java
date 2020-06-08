@@ -1,10 +1,7 @@
 package com.github.xgp.hub;
 
 import com.cloudhopper.sxmp.DeliverRequest;
-import com.cloudhopper.sxmp.DeliveryReportRequest;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
+import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import javax.validation.constraints.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -41,7 +38,7 @@ public class ProviderResource {
       @PathParam("sourceProvider") String sourceProvider,
       @PathParam("callbackUrl") String callbackUrlEnc,
       @Context SecurityContext securityContext) {
-    String callbackUrl = decode(callbackUrlEnc);
+    String callbackUrl = Router.urldecode(callbackUrlEnc);
     log.info("Received /dlr/{}/{}/{} from {}", internalId, sourceProvider, callbackUrl, provider);
     DeliveryReportRequest dlr = new DeliveryReportRequest();
     // TODO setup the dlr
@@ -50,11 +47,4 @@ public class ProviderResource {
     return router.getProviderClientMap().get(provider).getDlrResource(dlr);
   }
 
-  private String decode(String enc) {
-    try {
-      return URLDecoder.decode(enc, StandardCharsets.UTF_8.toString());
-    } catch (UnsupportedEncodingException e) {
-      throw new IllegalArgumentException(e.getCause());
-    }
-  }
 }

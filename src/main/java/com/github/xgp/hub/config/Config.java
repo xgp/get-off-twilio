@@ -7,12 +7,50 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Config {
 
+@JsonProperty("base_url")
+private String baseUrl;
+@JsonProperty("callback_url")
+private String callbackUrl;
+@JsonProperty("server_interface")
+private String serverInterface;
+  
   @JsonProperty("providers")
   private List<ProviderConfig> providers = null;
 
   @JsonProperty("mappings")
   private List<MappingConfig> mappings = null;
 
+@JsonProperty("base_url")
+public String getBaseUrl() {
+return baseUrl;
+}
+
+@JsonProperty("base_url")
+public void setBaseUrl(String baseUrl) {
+this.baseUrl = baseUrl;
+}
+
+@JsonProperty("callback_url")
+public String getCallbackUrl() {
+return callbackUrl;
+}
+
+@JsonProperty("callback_url")
+public void setCallbackUrl(String callbackUrl) {
+this.callbackUrl = callbackUrl;
+}
+
+@JsonProperty("server_interface")
+public String getServerInterface() {
+return serverInterface;
+}
+
+@JsonProperty("server_interface")
+public void setServerInterface(String serverInterface) {
+this.serverInterface = serverInterface;
+}
+
+  
   @JsonProperty("providers")
   public List<ProviderConfig> getProviders() {
     return providers;

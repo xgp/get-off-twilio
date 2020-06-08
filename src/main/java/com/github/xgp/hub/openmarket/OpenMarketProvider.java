@@ -1,7 +1,7 @@
 package com.github.xgp.hub.openmarket;
 
 import com.cloudhopper.sxmp.DeliverRequest;
-import com.cloudhopper.sxmp.DeliveryReportRequest;
+import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import com.github.xgp.hub.AbstractProvider;
 import com.github.xgp.hub.ClientApi;
 import com.github.xgp.hub.Provider;

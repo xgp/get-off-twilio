@@ -1,6 +1,7 @@
 package com.github.xgp.hub.sinch.server;
 
 import com.cloudhopper.sxmp.DeliverRequest;
+import com.clxcommunications.xms.api.MoTextSms;
 import com.github.xgp.hub.Router;
 import com.github.xgp.hub.config.ProviderConfig;
 import javax.validation.constraints.*;
@@ -10,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import lombok.extern.slf4j.Slf4j;
-import com.clxcommunications.xms.api.MoTextSms;
+
 @Slf4j
 public class SinchMoResource {
 

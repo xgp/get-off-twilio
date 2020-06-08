@@ -14,8 +14,7 @@ public class Hub extends ResourceConfig {
 
   public Hub() throws Exception {
     log.info("Initializing Hub...");
-    final Bootstrap bootstrap =
-        new Bootstrap(new File("config.json"));
+    final Bootstrap bootstrap = new Bootstrap(new File("config.json"));
     register(
         new AbstractBinder() {
           @Override
@@ -26,7 +25,7 @@ public class Hub extends ResourceConfig {
         });
     packages(
         "com.github.xgp.hub"); // recursive by default. use packages(boolean recursive, String...
-                               // packages) to limit. Can also use register(Class) to do one at a
-                               // time
+    // packages) to limit. Can also use register(Class) to do one at a
+    // time
   }
 }

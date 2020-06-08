@@ -64,7 +64,8 @@ public class GlobalSmsClient {
       // TODO do something with X-Request-Id
       String location = response.getFirstHeader("Location").getValue();
       if (status == 202 && location != null) {
-        return new GlobalSmsResponse(status, response.getFirstHeader("X-Request-Id").getValue())
+        return new GlobalSmsResponse<String>(
+                status, response.getFirstHeader("X-Request-Id").getValue())
             .body(location.substring(location.lastIndexOf("/")));
       } else {
         com.openmarket.sms.v4.mt.Error error = getMtError(entity.getContent());
@@ -96,7 +97,8 @@ public class GlobalSmsClient {
       HttpEntity entity = response.getEntity();
       int status = response.getStatusLine().getStatusCode();
       if (status == 200) {
-        return new GlobalSmsResponse(status, response.getFirstHeader("X-Request-Id").getValue())
+        return new GlobalSmsResponse<MtStatus>(
+                status, response.getFirstHeader("X-Request-Id").getValue())
             .body(getStatus(entity.getContent()));
       } else {
         com.openmarket.sms.v4.mt.Error error = getMtError(entity.getContent());
@@ -127,7 +129,8 @@ public class GlobalSmsClient {
       HttpEntity entity = response.getEntity();
       int status = response.getStatusLine().getStatusCode();
       if (status == 200) {
-        return new GlobalSmsResponse(status, response.getFirstHeader("X-Request-Id").getValue())
+        return new GlobalSmsResponse<Preview>(
+                status, response.getFirstHeader("X-Request-Id").getValue())
             .body(getPreview(entity.getContent()));
       } else {
         com.openmarket.sms.v4.preview.Error error = getPreviewError(entity.getContent());
