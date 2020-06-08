@@ -1,10 +1,10 @@
 package com.github.xgp.hub.sinch.server;
 
-import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import com.cloudhopper.sxmp.DeliveryStatus;
 import com.clxcommunications.xms.api.BatchDeliveryReport;
 import com.github.xgp.hub.Router;
 import com.github.xgp.hub.config.ProviderConfig;
+import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import javax.validation.constraints.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -27,10 +27,10 @@ public class SinchDlrResource {
   }
 
   @POST
-  @Consumes({MediaType.APPLICATION_XML})
+  @Consumes({MediaType.APPLICATION_JSON})
   public Response receiveDeliveryReceipt(
       BatchDeliveryReport report, @Context SecurityContext securityContext) {
-    log.info("Sinch dlr");
+    log.info("Sinch dlr: {}", report);
     //  convert deliveryReceipt to dlr, validate
     dlr.setStatus(
         new DeliveryStatus(

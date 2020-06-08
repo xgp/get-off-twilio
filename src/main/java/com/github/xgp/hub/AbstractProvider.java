@@ -1,8 +1,8 @@
 package com.github.xgp.hub;
 
 import com.cloudhopper.sxmp.DeliverRequest;
-import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import com.github.xgp.hub.config.ProviderConfig;
+import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 
 public abstract class AbstractProvider implements Provider {
 

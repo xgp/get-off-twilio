@@ -1,6 +1,5 @@
 package com.github.xgp.hub.sinch.client;
 
-import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import com.cloudhopper.sxmp.DeliveryStatus;
 import com.cloudhopper.sxmp.SubmitRequest;
 import com.cloudhopper.sxmp.SubmitResponse;
@@ -14,9 +13,10 @@ import com.clxcommunications.xms.api.MtBatchTextSmsCreate;
 import com.clxcommunications.xms.api.MtBatchTextSmsResult;
 import com.clxcommunications.xms.api.ReportType;
 import com.github.xgp.hub.ClientApi;
-import com.github.xgp.hub.Constants;
 import com.github.xgp.hub.Router;
 import com.github.xgp.hub.config.ProviderConfig;
+import com.github.xgp.hub.sinch.SinchProvider;
+import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import lombok.extern.slf4j.Slf4j;
@@ -36,11 +36,11 @@ public class SinchClientApi implements ClientApi {
 
   @Override
   public SubmitResponse sendMessage(SubmitRequest submit) throws Exception {
+    log.info("Sending message {}", submit);
     SubmitResponse response = submit.createResponse();
-
     try (ApiConnection conn = ApiConnection.builder().servicePlanId(spid).token(token).start()) {
       MtBatchTextSmsResult batch = conn.createBatch(submitToMtBatchText(submit));
-      response.setTicketId(batch.id().toString()); // TODO add prefix for sinch_
+      router.setTicketId(response, SinchProvider.PROVIDER_ID, batch.id().toString());
     } catch (ErrorResponseException ere) {
       response.setErrorCode(new Integer(ere.getCode())); // TODO convert to internal type
       response.setErrorMessage(ere.getText()); // TODO convert to internal type
@@ -59,17 +59,11 @@ public class SinchClientApi implements ClientApi {
             .body(submit.getText());
     if (submit.getDeliveryReport() != null
         && submit.getDeliveryReport()
-        && submit.getOptionalParams() != null
-        && submit.getOptionalParams().get(Constants.PARAM_KEY_INTERNAL_CALLBACK_URL) != null) {
+        && submit.getOptionalParams() != null) {
+      String callbackUrl = router.getInternalCallbackUrl(submit, SinchProvider.PROVIDER_ID);
+      log.info("Using callbackUrl {}", callbackUrl);
       try {
-        builder
-            .callbackUrl(
-                new URI(
-                    submit
-                        .getOptionalParams()
-                        .get(Constants.PARAM_KEY_INTERNAL_CALLBACK_URL)
-                        .toString()))
-            .deliveryReport(ReportType.FULL);
+        builder.callbackUrl(new URI(callbackUrl)).deliveryReport(ReportType.FULL);
       } catch (URISyntaxException e) {
         log.warn("Callback URL was malformed. Ignoring.", e);
       }

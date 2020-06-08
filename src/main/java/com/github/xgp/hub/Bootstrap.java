@@ -4,6 +4,7 @@ import com.cloudhopper.sxmp.MobileAddress;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.xgp.hub.config.*;
+import com.github.xgp.hub.twilio.client.TwilioCallbackApi;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -32,7 +33,10 @@ public class Bootstrap {
     router.setBaseUrl(config.getBaseUrl());
     router.setCallbackUrl(config.getCallbackUrl());
     router.setServerInterface(config.getServerInterface());
-    
+
+    // hack: todo make this an spi that loads
+    router.setApiProvider(new TwilioCallbackApi(config.getCallbackUrl(), "POST", router));
+
     // make a map of the ProviderConfigs
     Map<String, ProviderConfig> providerConfigs =
         config.getProviders().stream()
@@ -43,22 +47,24 @@ public class Bootstrap {
     Map<String, Provider> providers = new HashMap<String, Provider>();
     for (Provider p : loader) {
       ProviderConfig c = providerConfigs.get(p.getType());
-      log.info(
-          "Loading provider {} with config {}",
-          p.getType(),
-          mapper.writeValueAsString(c)); // todo get rid of this to avoid un/pw in the logs
-      if (c.getDefault() != null && c.getDefault()) {
-        log.info("Selected default provider as {}", c.getType());
-        router.setDefaultProvider(c.getType());
+      if (c != null) {
+        log.info(
+            "Loading provider {} with config {}",
+            p.getType(),
+            mapper.writeValueAsString(c)); // todo get rid of this to avoid un/pw in the logs
+        if (c.getDefault() != null && c.getDefault()) {
+          log.info("Selected default provider as {}", c.getType());
+          router.setDefaultProvider(c.getType());
+        }
+        p.configure(c);
+        p.router(router);
+        providers.put(p.getType(), p);
       }
-      p.configure(c);
-      p.router(router);
-      providers.put(p.getType(), p);
     }
     router.setProviderClientMap(providers);
 
     // load the address mappings
-    final Map<MobileAddress, String> mappings = new HashMap<MobileAddress, String>();
+    final Map<String, String> mappings = new HashMap<String, String>();
     config.getMappings().stream()
         .forEach(
             m ->
@@ -67,13 +73,14 @@ public class Bootstrap {
                         a -> {
                           log.info(
                               "Mapping {} ({}) to {}", a.getAddress(), a.getType(), m.getType());
-                          mappings.put(a, m.getType());
+                          mappings.put(
+                              String.format("%s:%s", a.getType(), a.getAddress()), m.getType());
                         }));
     ProviderMap providerMap =
         new ProviderMap() {
           @Override
           public String getProviderFor(MobileAddress address) {
-            return mappings.get(address);
+            return mappings.get(String.format("%s:%s", address.getType(), address.getAddress()));
           }
         };
     router.setProviderMap(providerMap);

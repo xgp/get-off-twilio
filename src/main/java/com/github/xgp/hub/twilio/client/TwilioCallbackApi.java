@@ -2,10 +2,10 @@ package com.github.xgp.hub.twilio.client;
 
 import com.cloudhopper.sxmp.DeliverRequest;
 import com.cloudhopper.sxmp.DeliverResponse;
-import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import com.cloudhopper.sxmp.DeliveryReportResponse;
 import com.github.xgp.hub.CallbackApi;
 import com.github.xgp.hub.Router;
+import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -53,13 +53,13 @@ public class TwilioCallbackApi implements CallbackApi {
             "MessageSid",
             deliver
                 .getTicketId())); // A 34 character unique identifier for the message. May be used
-                                  // to later retrieve this message from the REST API.
+    // to later retrieve this message from the REST API.
     params.add(
         new BasicNameValuePair(
             "SmsSid",
             deliver
                 .getTicketId())); // Same value as MessageSid. Deprecated and included for backward
-                                  // compatibility.
+    // compatibility.
     params.add(
         new BasicNameValuePair(
             "AccountSid",
@@ -95,15 +95,13 @@ public class TwilioCallbackApi implements CallbackApi {
     params.add(
         new BasicNameValuePair(
             "MessageSid",
-            dlr
-                .getTicketId())); // A 34 character unique identifier for the message. May be used
-                                  // to later retrieve this message from the REST API.
+            dlr.getTicketId())); // A 34 character unique identifier for the message. May be used
+    // to later retrieve this message from the REST API.
     params.add(
         new BasicNameValuePair(
             "SmsSid",
-            dlr
-                .getTicketId())); // Same value as MessageSid. Deprecated and included for backward
-                                  // compatibility.
+            dlr.getTicketId())); // Same value as MessageSid. Deprecated and included for backward
+    // compatibility.
 
     params.add(
         new BasicNameValuePair(

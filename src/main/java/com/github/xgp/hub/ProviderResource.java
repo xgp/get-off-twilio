@@ -37,14 +37,19 @@ public class ProviderResource {
       @PathParam("internalId") String internalId,
       @PathParam("sourceProvider") String sourceProvider,
       @PathParam("callbackUrl") String callbackUrlEnc,
+      @HeaderParam("Content-Type") String contentType,
       @Context SecurityContext securityContext) {
     String callbackUrl = Router.urldecode(callbackUrlEnc);
-    log.info("Received /dlr/{}/{}/{} from {}", internalId, sourceProvider, callbackUrl, provider);
-    DeliveryReportRequest dlr = new DeliveryReportRequest();
-    // TODO setup the dlr
+    log.info(
+        "Received /dlr/{}/{}/{} from {} with content-type {}",
+        internalId,
+        sourceProvider,
+        callbackUrl,
+        provider,
+        contentType);
 
-    //  Object getDlrResource(DeliveryReportRequest dlr);
+    DeliveryReportRequest dlr =
+        router.createDeliveryReportRequest(sourceProvider, provider, internalId, callbackUrl);
     return router.getProviderClientMap().get(provider).getDlrResource(dlr);
   }
-
 }

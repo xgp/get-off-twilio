@@ -2,21 +2,22 @@ package com.github.xgp.hub;
 
 import com.cloudhopper.sxmp.DeliverRequest;
 import com.cloudhopper.sxmp.DeliverResponse;
-import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import com.cloudhopper.sxmp.DeliveryReportResponse;
+import com.cloudhopper.sxmp.MessageRequest;
+import com.cloudhopper.sxmp.Operation;
+import com.cloudhopper.sxmp.OptionalParamMap;
 import com.cloudhopper.sxmp.SubmitRequest;
 import com.cloudhopper.sxmp.SubmitResponse;
-import com.cloudhopper.sxmp.OptionalParamMap;
-import com.cloudhopper.sxmp.MessageRequest;
 import com.cloudhopper.sxmp.SxmpErrorException;
+import com.github.xgp.hub.sxmp.DeliveryReportRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
-import java.util.UUID;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -62,18 +63,48 @@ public class Router implements ClientApi, CallbackApi {
     }
   }
 
-  public String getInternalCallbackUrl(MessageRequest request, String destinationProvider) {
-    return getInternalCallbackUrl(request.getOptionalParams().get(Constants.PARAM_KEY_SOURCE_PROVIDER).toString(), request.getReferenceId(), request.getOptionalParams().get(Constants.PARAM_KEY_ORIGINAL_CALLBACK_URL).toString(), destinationProvider);
+  public DeliveryReportRequest createDeliveryReportRequest(
+      String sourceProvider, String destinationProvider, String internalId, String callbackUrl) {
+    DeliveryReportRequest dlr = new DeliveryReportRequest();
+    try {
+      dlr.setReferenceId(internalId);
+      OptionalParamMap params = new OptionalParamMap(OptionalParamMap.HASH_MAP);
+      params.put(Constants.PARAM_KEY_ORIGINAL_CALLBACK_URL, callbackUrl);
+      params.put(Constants.PARAM_KEY_SOURCE_PROVIDER, sourceProvider);
+      params.put(Constants.PARAM_KEY_DESTINATION_PROVIDER, destinationProvider);
+      dlr.setOptionalParams(params);
+      return dlr;
+    } catch (SxmpErrorException e) {
+      throw new IllegalStateException(e);
+    }
   }
 
-  public String getInternalCallbackUrl(String sourceProvider, String internalId, String originalCallbackUrl, String destinationProvider) {
-    return String.format("%s/providers/%s/dlr/%s/%s/%s",
-                         baseUrl, destinationProvider, internalId, sourceProvider, urlencode(originalCallbackUrl));
+  public void setTicketId(Operation operation, String provider, String providerId) {
+    operation.setTicketId(String.format("%s_%s", provider, providerId));
   }
-  
+
+  public String getInternalCallbackUrl(MessageRequest request, String destinationProvider) {
+    return getInternalCallbackUrl(
+        request.getOptionalParams().get(Constants.PARAM_KEY_SOURCE_PROVIDER).toString(),
+        request.getReferenceId(),
+        request.getOptionalParams().get(Constants.PARAM_KEY_ORIGINAL_CALLBACK_URL).toString(),
+        destinationProvider);
+  }
+
+  public String getInternalCallbackUrl(
+      String sourceProvider,
+      String internalId,
+      String originalCallbackUrl,
+      String destinationProvider) {
+    return String.format(
+        "%s/providers/%s/dlr/%s/%s/%s",
+        baseUrl, destinationProvider, internalId, sourceProvider, urlencode(originalCallbackUrl));
+  }
+
   @Override
   public SubmitResponse sendMessage(SubmitRequest submit) throws Exception {
     String provider = providerMap.getProviderFor(submit.getSourceAddress());
+    log.info("Found provider {} for address {}", provider, submit.getSourceAddress().getAddress());
     ClientApi client = providerClientMap.get(provider).createClient();
     return client.sendMessage(submit);
   }
@@ -103,7 +134,7 @@ public class Router implements ClientApi, CallbackApi {
   public DeliveryReportResponse onDeliveryReceipt(DeliveryReportRequest dlr) {
     return apiProvider.onDeliveryReceipt(dlr);
   }
-  
+
   public static String generateId() {
     return UUID.randomUUID().toString();
   }
@@ -112,7 +143,7 @@ public class Router implements ClientApi, CallbackApi {
     try {
       return URLEncoder.encode(raw, StandardCharsets.UTF_8.toString());
     } catch (UnsupportedEncodingException e) {
-      log.warn("Error encoding "+raw, e);
+      log.warn("Error encoding " + raw, e);
       throw new RuntimeException(e);
     }
   }
@@ -121,9 +152,8 @@ public class Router implements ClientApi, CallbackApi {
     try {
       return URLDecoder.decode(enc, StandardCharsets.UTF_8.toString());
     } catch (UnsupportedEncodingException e) {
-      log.warn("Error decoding "+enc, e);
+      log.warn("Error decoding " + enc, e);
       throw new RuntimeException(e);
     }
   }
-  
 }

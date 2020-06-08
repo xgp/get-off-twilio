@@ -1,13 +1,13 @@
 package com.github.xgp.hub.openmarket;
 
 import com.cloudhopper.sxmp.DeliverRequest;
-import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import com.github.xgp.hub.AbstractProvider;
 import com.github.xgp.hub.ClientApi;
 import com.github.xgp.hub.Provider;
 import com.github.xgp.hub.openmarket.client.OpenMarketClientApi;
 import com.github.xgp.hub.openmarket.server.OpenMarketDlrResource;
 import com.github.xgp.hub.openmarket.server.OpenMarketMoResource;
+import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import com.google.auto.service.AutoService;
 import lombok.extern.slf4j.Slf4j;
 

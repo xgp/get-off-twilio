@@ -1,11 +1,11 @@
 package com.github.xgp.hub.openmarket.client;
 
-import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import com.cloudhopper.sxmp.SubmitRequest;
 import com.cloudhopper.sxmp.SubmitResponse;
 import com.github.xgp.hub.ClientApi;
 import com.github.xgp.hub.Router;
 import com.github.xgp.hub.config.ProviderConfig;
+import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

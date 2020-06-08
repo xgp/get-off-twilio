@@ -14,7 +14,7 @@ public class Hub extends ResourceConfig {
 
   public Hub() throws Exception {
     log.info("Initializing Hub...");
-    final Bootstrap bootstrap = new Bootstrap(new File("config.json"));
+    final Bootstrap bootstrap = new Bootstrap(new File(System.getenv(Constants.HUB_CONFIG_ENV)));
     register(
         new AbstractBinder() {
           @Override

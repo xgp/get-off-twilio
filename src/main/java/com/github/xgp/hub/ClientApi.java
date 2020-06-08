@@ -1,8 +1,8 @@
 package com.github.xgp.hub;
 
-import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 import com.cloudhopper.sxmp.SubmitRequest;
 import com.cloudhopper.sxmp.SubmitResponse;
+import com.github.xgp.hub.sxmp.DeliveryReportRequest;
 
 /**
  * Client for sending submit messages and requesting delivery status. Should be implemented by
