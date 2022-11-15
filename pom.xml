@@ -18,7 +18,7 @@
     <main.java.package>com.github.xgp.hub</main.java.package>
     <swagger-core-version>2.0.0</swagger-core-version>
     <jersey-version>2.31</jersey-version>
-    <jackson-version>2.10.1</jackson-version>
+    <jackson-version>2.12.7.1</jackson-version>
     <junit-version>4.12</junit-version>
     <lombok-version>1.18.12</lombok-version>
     <auto-service-version>1.0-rc7</auto-service-version>
